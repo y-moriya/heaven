@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'login'
 require 'player'
 require 'util'
@@ -357,9 +359,9 @@ class Vil
 			end
 		end
 		if (@dummy)
-			s.gsub!(/^Â¼/, "¥À")
+			s.gsub!(/^æ‘/, "ãƒ€")
 		end
-		"#{j}¿Í¡§#{s}"
+		"#{j}äººï¼š#{s}"
 	end
 
 	def display_composition(comp_i)
@@ -369,14 +371,14 @@ class Vil
 			else
 				Composition.display(comp_i)
 			end
-		str.sub!(/(<br>)(#{@players.size}¿Í)/) do |m|
+		str.sub!(/(<br>)(#{@players.size}äºº)/) do |m|
 			%Q(#{$1}<span class="flash">#{$2}</span>)
 		end
-		str.sub!(/^(#{@players.size}¿Í)/) do |m|
+		str.sub!(/^(#{@players.size}äºº)/) do |m|
 			%Q(<span class="flash">#{$1}</span>)
 		end
 		if (@dummy)
-			str.gsub!(/¡§Â¼/, "¡§¥À")
+			str.gsub!(/ï¼šæ‘/, "ï¼šãƒ€")
 		end
 		str
 	end
@@ -388,9 +390,9 @@ class Vil
 			if(@wide_comps[i])
 				n =
 					if(i < 10)
-						"#{i}¿Í ¡§"
+						"#{i}äºº ï¼š"
 					else
-						"#{i}¿Í¡§"
+						"#{i}äººï¼š"
 					end
 				s += n + @wide_comps[i] + "<br>"
 			end
@@ -427,7 +429,7 @@ class Vil
 				return false if (!pscompdb.root?(num_p))
 				psco =
 				if (@dummy)
-					 pscompdb[num_p].select { |c| /^Â¼/ =~ c['comp'] }
+					 pscompdb[num_p].select { |c| /^æ‘/ =~ c['comp'] }
 				else
 					pscompdb[num_p]
 				end
@@ -466,12 +468,12 @@ class Vil
 	end
 
 	def announce_composition
-		s = '¤É¤¦¤ä¤é¤³¤ÎÂ¼¤Ë¤Ï'
+		s = 'ã©ã†ã‚„ã‚‰ã“ã®æ‘ã«ã¯'
 		for i in 0...@skill_nums.size do
 			n = @skill_nums[i]
-			s += "¡¢#{Skill.skills[i].name}¤¬#{n}¿Í" if (n !=0)
+			s += "ã€#{Skill.skills[i].name}ãŒ#{n}äºº" if (n !=0)
 		end
-		s += '¤¤¤ë¤è¤¦¤Ç¤¹¡£'
+		s += 'ã„ã‚‹ã‚ˆã†ã§ã™ã€‚'
 		addlog(announce(s))
 	end
 
@@ -499,32 +501,32 @@ class Vil
 
 	def announce_firstsid
 		str = ''
-		s = "¤³¤ÎÂ¼¤ËÀø¤à#{Skill.skills[1].name}¤Ï"
+		s = "ã“ã®æ‘ã«æ½œã‚€#{Skill.skills[1].name}ã¯"
 		@players.values.select { |p| p.sid == 1 }.each do |p|
-			s += "¡¢#{p.name}"
+			s += "ã€#{p.name}"
 		end
-		s += ' ¤Ç¤¹¡£'
+		s += ' ã§ã™ã€‚'
 		str += fanatic_announce(s)
 
 		ps = @players.values.select { |p| p.sid == 6 }
 		if (ps.size == 1)
-			str += free_announce("¤¢¤Ê¤¿¤ÏÀ¨¤¤¶¦Í­¼Ô¤Ç¤¹¡£À¨¤¹¤®¤ÆÁêÊı¤Ï¤¤¤Ş¤»¤ó¡£", ps[0].num_id)
+			str += free_announce("ã‚ãªãŸã¯å‡„ã„å…±æœ‰è€…ã§ã™ã€‚å‡„ã™ãã¦ç›¸æ–¹ã¯ã„ã¾ã›ã‚“ã€‚", ps[0].num_id)
 		elsif (ps.size > 1)
 			ps.each do |p|
 				s_free = ''
 				ps.each do |m|
 					if (p != m)
-						s_free += "¡¢#{m.name}"
+						s_free += "ã€#{m.name}"
 					end
 				end
-				str += free_announce("¤¢¤Ê¤¿¤È¿´¤ò¶¦Í­¤¹¤ë¤Î¤Ï#{s_free} ¤Ç¤¹¡£", p.num_id)
+				str += free_announce("ã‚ãªãŸã¨å¿ƒã‚’å…±æœ‰ã™ã‚‹ã®ã¯#{s_free} ã§ã™ã€‚", p.num_id)
 			end
 		end
 		ps = @players.values.select { |p| p.sid == 10 }
 		i = 1
 		while (ps.size > 0)
 			p = ps[rand(ps.size).to_i]
-			str += stigmata_announce("¤¢¤Ê¤¿¤Ï À»º¯¼Ô#{i} ¤Ç¤¹¡£", p.num_id)
+			str += stigmata_announce("ã‚ãªãŸã¯ è–ç—•è€…#{i} ã§ã™ã€‚", p.num_id)
 			ps.delete(p)
 			i += 1
 		end
@@ -580,7 +582,7 @@ class Vil
 		shrink_cnt -= ps.size
 
 		if (shrink_cnt != 0)
-			addlog(announce("¤Ê¤ó¤«¥¨¥é¡¼¤Î¤»¤¤¤ÇÌò¿¦¤¬¿Í¿ô¤è¤êÂ¿¤¤Í½´¶¡¢¥é¥ó¥À¥à¤Ç#{shrink_cnt}¿ÍÊ¬ºï¤ê¤Ş¤¹¡£"))
+			addlog(announce("ãªã‚“ã‹ã‚¨ãƒ©ãƒ¼ã®ã›ã„ã§å½¹è·ãŒäººæ•°ã‚ˆã‚Šå¤šã„äºˆæ„Ÿã€ãƒ©ãƒ³ãƒ€ãƒ ã§#{shrink_cnt}äººåˆ†å‰Šã‚Šã¾ã™ã€‚"))
 		end
 
 		for i in 0...shrink_cnt
@@ -706,7 +708,7 @@ class Vil
 			pl = pf.lovers.find { |l| l.dead != 0}
 			pf.dead = 3
 			@victims.push(pf)
-			msg = "#{pf.name} ¤ÏÈá¤·¤ß¤Ë¤¯¤ì¤Æ¡¢#{pl.name} ¤Î¸å¤òÄÉ¤¤¤Ş¤·¤¿¡£"
+			msg = "#{pf.name} ã¯æ‚²ã—ã¿ã«ãã‚Œã¦ã€#{pl.name} ã®å¾Œã‚’è¿½ã„ã¾ã—ãŸã€‚"
 			ps.delete(pf)
 			addlog(cupid_announce(msg))
 		end
@@ -720,7 +722,7 @@ class Vil
 				p.target = pids[rand(pids.size).to_i].num_id
 				p.target2 = pids[rand(pids.size).to_i].num_id
       			p.target2 = pids[rand(pids.size).to_i].num_id while (p.target2 == p.target)
-				r = '(¥é¥ó¥À¥à)'
+				r = '(ãƒ©ãƒ³ãƒ€ãƒ )'
 			end
 			t = player_p(p.target)
 			t2 = player_p(p.target2)
@@ -728,9 +730,9 @@ class Vil
 			t2.lovers.push(t)
 			t.lovers.sort { |x, y|x.num_id <=> y.num_id }
 			t2.lovers.sort { |x, y|x.num_id <=> y.num_id }
-			msg = "#{p.name} ¤Ï°¦¤ÎÌğ¤ò·â¤Á¤Ş¤·¤¿¡£"
+			msg = "#{p.name} ã¯æ„›ã®çŸ¢ã‚’æ’ƒã¡ã¾ã—ãŸã€‚"
 			msg += r
-			msg += "<br>#{t.name} ¤È #{t2.name} ¤ÏÎø¤ËÍî¤Á¤Ş¤·¤¿¡£"
+			msg += "<br>#{t.name} ã¨ #{t2.name} ã¯æ‹ã«è½ã¡ã¾ã—ãŸã€‚"
 			addlog(cupid_announce(msg, p.num_id))
 		end
 		pids_s_judge(13).each do |p|
@@ -738,7 +740,7 @@ class Vil
 			if (p.target == -1)
 				p.target = pids[rand(pids.size).to_i].num_id
       			p.target = pids[rand(pids.size).to_i].num_id while (p.target == p.num_id)
-				r = '(¥é¥ó¥À¥à)'
+				r = '(ãƒ©ãƒ³ãƒ€ãƒ )'
 			end
 			t = player_p(p.target)
 			t2 = player_p(p.num_id)
@@ -746,9 +748,9 @@ class Vil
 			t2.lovers.push(t)
 			t.lovers.sort { |x, y|x.num_id <=> y.num_id }
 			t2.lovers.sort { |x, y|x.num_id <=> y.num_id }
-			msg = "#{p.name} ¤Ï #{t.name} ¤Ë°¦¤òµá¤á¤Ş¤·¤¿¡£"
+			msg = "#{p.name} ã¯ #{t.name} ã«æ„›ã‚’æ±‚ã‚ã¾ã—ãŸã€‚"
 			msg += r
-			msg += "<br>#{t2.name} ¤È #{t.name} ¤ÏÎø¤ËÍî¤Á¤Ş¤·¤¿¡£"
+			msg += "<br>#{t2.name} ã¨ #{t.name} ã¯æ‹ã«è½ã¡ã¾ã—ãŸã€‚"
 			addlog(cupid_announce(msg, p.num_id))
 		end
 	end
@@ -761,11 +763,11 @@ class Vil
 			if (p.target == -1)
 				p.target = pids[rand(pids.size).to_i].num_id
       			p.target = pids[rand(pids.size).to_i].num_id while (p.target == p.num_id)
-				r = '(¥é¥ó¥À¥à)'
+				r = '(ãƒ©ãƒ³ãƒ€ãƒ )'
 			end
 			gam = player_p(p.target)
 			all_gam.push(gam)
-			msg = "#{p.name} ¤Ï¡¢#{gam.name} ¤Î¼ÙËâ¤ò¤·¤Æ¤¤¤Ş¤¹¡£"
+			msg = "#{p.name} ã¯ã€#{gam.name} ã®é‚ªé­”ã‚’ã—ã¦ã„ã¾ã™ã€‚"
 			msg += r
       		addlog(gammer_announce(msg, p.num_id))
 		end
@@ -774,25 +776,25 @@ class Vil
 			if (p.target == -1)
 				p.target = pids[rand(pids.size).to_i].num_id
       			p.target = pids[rand(pids.size).to_i].num_id while (p.target == p.num_id)
-				r = '(¥é¥ó¥À¥à)'
+				r = '(ãƒ©ãƒ³ãƒ€ãƒ )'
 			end
 			t = player_p(p.target)
 			res =
 				if (t.sid == 1)
 					Skill.skills[1].name
 				else
-					"¿Í´Ö"
+					"äººé–“"
 				end
-			msg = "#{p.name} ¤Ï¡¢#{t.name} ¤òÀê¤¤¤Ş¤·¤¿¡£"
+			msg = "#{p.name} ã¯ã€#{t.name} ã‚’å ã„ã¾ã—ãŸã€‚"
 			msg += r
 			if (all_gam.all? {|g| g != p})
 				t.fortune_t[p] = @date - 1
-				msg += "<br>#{t.name} ¤Ï #{res}¤Î¤è¤¦¤Ç¤¹¡£"
+				msg += "<br>#{t.name} ã¯ #{res}ã®ã‚ˆã†ã§ã™ã€‚"
 				if (t.dead == 0 && t.sid == 7)
 					t.dead = 2
 				end
 			else
-				msg += "<br>¤·¤«¤·²¿¤«¤ÎÎÏ¤Ë¼ÙËâ¤µ¤ì¤Ş¤·¤¿¡£"
+				msg += "<br>ã—ã‹ã—ä½•ã‹ã®åŠ›ã«é‚ªé­”ã•ã‚Œã¾ã—ãŸã€‚"
 			end
       		addlog(fortune_announce(msg, p.num_id))
 		end
@@ -801,16 +803,16 @@ class Vil
 			if (p.target == -1)
 				p.target = pids[rand(pids.size).to_i].num_id
       			p.target = pids[rand(pids.size).to_i].num_id while (p.target == p.num_id)
-				r = '(¥é¥ó¥À¥à)'
+				r = '(ãƒ©ãƒ³ãƒ€ãƒ )'
 			end
 			t = player_p(p.target)
-			msg = "#{p.name} ¤Ï¡¢#{t.name} ¤ÎÃæ¿È¤òÀê¤¤¤Ş¤·¤¿¡£"
+			msg = "#{p.name} ã¯ã€#{t.name} ã®ä¸­èº«ã‚’å ã„ã¾ã—ãŸã€‚"
 			msg += r
 			if (all_gam.all? {|g| g != p})
 				t.fortune_id_t[p] = @date - 1
-				msg += "<br>#{t.name} ¤ÎÃæ¿È¤Ï #{t.userid} ¤Î¤è¤¦¤Ç¤¹¡£"
+				msg += "<br>#{t.name} ã®ä¸­èº«ã¯ #{t.userid} ã®ã‚ˆã†ã§ã™ã€‚"
 			else
-				msg += "<br>¤·¤«¤·²¿¤«¤ÎÎÏ¤Ë¼ÙËâ¤µ¤ì¤Ş¤·¤¿¡£"
+				msg += "<br>ã—ã‹ã—ä½•ã‹ã®åŠ›ã«é‚ªé­”ã•ã‚Œã¾ã—ãŸã€‚"
 			end
       		addlog(fortune_id_announce(msg, p.num_id))
 		end
@@ -854,27 +856,27 @@ class Vil
 			end
 			s =
 				if ( pids_s_judge(1).size > 1)
-					' Ã£'
+					' é”'
 				else
 					' '
 				end
-			addlog(whisper_announce("#{w.name}#{s}¤Ï¡¢#{t.name} ¤ò½±·â¤·¤Ş¤¹¡£"))
+			addlog(whisper_announce("#{w.name}#{s}ã¯ã€#{t.name} ã‚’è¥²æ’ƒã—ã¾ã™ã€‚"))
 		else
 			r = ''
 			if (attack_dummy(@date))
 				t = player_p(1)
 			else
-				r = '(¥é¥ó¥À¥à)'
+				r = '(ãƒ©ãƒ³ãƒ€ãƒ )'
 				t = pids[rand(pids.size).to_i]
 	      		t = pids[rand(pids.size).to_i] while (t.sid == 1)
 			end
 			s =
 				if ( pids_s_judge(1).size > 1)
-					"#{Skill.skills[1].name}Ã£"
+					"#{Skill.skills[1].name}é”"
 				else
 					"#{pids_s_judge(1)[0].name} "
 				end
-			addlog(whisper_announce("#{s}¤Ï¡¢#{t.name} ¤ò½±·â¤·¤Ş¤¹¡£#{r}"))
+			addlog(whisper_announce("#{s}ã¯ã€#{t.name} ã‚’è¥²æ’ƒã—ã¾ã™ã€‚#{r}"))
 		end
 
 		all_g = Array.new
@@ -885,15 +887,15 @@ class Vil
 					if (p.target == -1)
 						p.target = pids[rand(pids.size).to_i].num_id
 		      			p.target = pids[rand(pids.size).to_i].num_id while (p.target == p.num_id)
-						r = '(¥é¥ó¥À¥à)'
+						r = '(ãƒ©ãƒ³ãƒ€ãƒ )'
 					end
 					g = player_p(p.target)
 					if (g.guard_t.key?(p))
-						msg = "#{p.name} ¤Ï¡¢#{g.name} ¤ò¤â¤¦¸î±Ò¤·¤Ş¤»¤ó¡£"
+						msg = "#{p.name} ã¯ã€#{g.name} ã‚’ã‚‚ã†è­·è¡›ã—ã¾ã›ã‚“ã€‚"
 						msg += r
 					else
 						all_g.push(g)
-						msg = "#{p.name} ¤Ï¡¢#{g.name} ¤ò¸î±Ò¤·¤Æ¤¤¤Ş¤¹¡£"
+						msg = "#{p.name} ã¯ã€#{g.name} ã‚’è­·è¡›ã—ã¦ã„ã¾ã™ã€‚"
 						msg += r
 					end
 		      		addlog(guard_announce(msg, p.num_id))
@@ -924,22 +926,22 @@ class Vil
 		if (wcnt == 0 || (wcnt * 2) >= pcnt)
 			if (lcnt > 0)
 				addlog(announce(LOVE_WIN))
-				addlog(win_announce("Îø¿Í¤Î¾¡Íø¤Ç¤¹¡ª"))
-				@players.values.select { |p| p.lovers.size != 0 || Skill.skills[p.sid].position == 'Îø¿Í' }.each do |p|
+				addlog(win_announce("æ‹äººã®å‹åˆ©ã§ã™ï¼"))
+				@players.values.select { |p| p.lovers.size != 0 || Skill.skills[p.sid].position == 'æ‹äºº' }.each do |p|
 					p.win = 0
 				end
 			else
 				if(ycnt == 0)
 					if (wcnt == 0)
 						addlog(announce(FOLK_WIN))
-						addlog(win_announce("Â¼¿Í¤Î¾¡Íø¤Ç¤¹¡ª"))
-						@players.values.select { |p| p.lovers.size == 0 && Skill.skills[p.sid].position == 'Â¼¿Í' }.each do |p|
+						addlog(win_announce("æ‘äººã®å‹åˆ©ã§ã™ï¼"))
+						@players.values.select { |p| p.lovers.size == 0 && Skill.skills[p.sid].position == 'æ‘äºº' }.each do |p|
 							p.win = 0
 						end
 					else
 						addlog(announce(WOLF_WIN))
-						addlog(win_announce("#{Skill.skills[1].name}¤Î¾¡Íø¤Ç¤¹¡ª"))
-						@players.values.select { |p| p.lovers.size == 0 && Skill.skills[p.sid].position == '¿ÍÏµ' }.each do |p|
+						addlog(win_announce("#{Skill.skills[1].name}ã®å‹åˆ©ã§ã™ï¼"))
+						@players.values.select { |p| p.lovers.size == 0 && Skill.skills[p.sid].position == 'äººç‹¼' }.each do |p|
 							p.win = 0
 						end
 					end
@@ -949,8 +951,8 @@ class Vil
 					else
 						addlog(announce(YOKO_WIN_W))
 					end
-					addlog(win_announce("ÍÅËâ¤Î¾¡Íø¤Ç¤¹¡ª"))
-					@players.values.select { |p| Skill.skills[p.sid].position == 'ÍÅËâ' }.each do |p|
+					addlog(win_announce("å¦–é­”ã®å‹åˆ©ã§ã™ï¼"))
+					@players.values.select { |p| Skill.skills[p.sid].position == 'å¦–é­”' }.each do |p|
 						p.win = 0
 					end
 				end
@@ -984,14 +986,14 @@ class Vil
 			if (p.say_cnt == 0)
 				p.dead = 3
 				@executions.push(p)
-				addlog(execution_announce("#{p.name} ¤¬ÆÍÁ³»à¤·¤Ş¤·¤¿¡£"))
+				addlog(execution_announce("#{p.name} ãŒçªç„¶æ­»ã—ã¾ã—ãŸã€‚"))
 				res =
 					if (p.sid == 1)
 						#{Skill.skills[1].name}
 					else
-						"¿Í´Ö"
+						"äººé–“"
 					end
-				addlog(spirit_announce("#{p.name} ¤Ï #{res}¤À¤Ã¤¿¤è¤¦¤Ç¤¹¡£"))
+				addlog(spirit_announce("#{p.name} ã¯ #{res}ã ã£ãŸã‚ˆã†ã§ã™ã€‚"))
 			end
 		end
 	end
@@ -1007,12 +1009,12 @@ class Vil
 				p.vote = pids[rand(pids.size).to_i].num_id
 				p.vote = pids[rand(pids.size).to_i].num_id while (p.vote == p.num_id)
 				t = player_p(p.vote)
-				r = "#{p.name} ¤¬ #{t.name} ¤ËÅêÉ¼¤·¤Ş¤·¤¿¡£(¥é¥ó¥À¥à)"
+				r = "#{p.name} ãŒ #{t.name} ã«æŠ•ç¥¨ã—ã¾ã—ãŸã€‚(ãƒ©ãƒ³ãƒ€ãƒ )"
 				addlog(setvote(p.num_id, r))
 			end
 
 			t = player_p(p.vote)
-			s += "<tr><td>#{p.name}</td><td>¤Ï</td><td>#{t.name}</td><td>¤ËÅêÉ¼¤·¤Ş¤·¤¿¡£</td></tr>"
+			s += "<tr><td>#{p.name}</td><td>ã¯</td><td>#{t.name}</td><td>ã«æŠ•ç¥¨ã—ã¾ã—ãŸã€‚</td></tr>"
 
 			votes[t] = votes[t].to_i + 1
 			max = votes[t] if (votes[t] > max)
@@ -1025,7 +1027,7 @@ class Vil
 				str = secret_announce("<table class=\"vote_t\">#{s}</table>")
 				pids.each do |p|
 					next if (votes[p].to_i == 0)
-					s2 += "<tr><td>#{p.name}</td><td>¤Ë¡¢#{votes[p]}¿Í¤¬ÅêÉ¼¤·¤Ş¤·¤¿¡£</td></tr>"
+					s2 += "<tr><td>#{p.name}</td><td>ã«ã€#{votes[p]}äººãŒæŠ•ç¥¨ã—ã¾ã—ãŸã€‚</td></tr>"
 				end
 				str = str + announce("<table class=\"vote_t\">#{s2}</table>")
 			end
@@ -1036,14 +1038,14 @@ class Vil
 			if (result.dead == 0)
 				result.dead = 3
 				@executions.push(result)
-				addlog(execution_announce("ÅêÉ¼¤Î·ë²Ì¡¢#{result.name} ¤¬½è·º¤µ¤ì¤Ş¤·¤¿¡£"))
+				addlog(execution_announce("æŠ•ç¥¨ã®çµæœã€#{result.name} ãŒå‡¦åˆ‘ã•ã‚Œã¾ã—ãŸã€‚"))
 				res =
 					if (result.sid == 1)
 						Skill.skills[1].name
 					else
-						"¿Í´Ö"
+						"äººé–“"
 					end
-				addlog(spirit_announce("#{result.name} ¤Ï #{res}¤À¤Ã¤¿¤è¤¦¤Ç¤¹¡£"))
+				addlog(spirit_announce("#{result.name} ã¯ #{res}ã ã£ãŸã‚ˆã†ã§ã™ã€‚"))
 			end
 		end
 	end
@@ -1110,23 +1112,23 @@ class Vil
 	def up_death
 		ps = @players.values.select { |p| p.dead == 2 }
 		if (ps.size == 0)
-			addlog(safety_announce("º£Æü¤Ïµ¾À·¼Ô¤¬¤¤¤Ê¤¤¤è¤¦¤À¡£#{Skill.skills[1].name}¤Ï½±·â¤ò¼ºÇÔ¤·¤¿¤Î¤À¤í¤¦¤«¡£"))
+			addlog(safety_announce("ä»Šæ—¥ã¯çŠ ç‰²è€…ãŒã„ãªã„ã‚ˆã†ã ã€‚#{Skill.skills[1].name}ã¯è¥²æ’ƒã‚’å¤±æ•—ã—ãŸã®ã ã‚ã†ã‹ã€‚"))
 			if ((@card && @date == 2) || (!@card && @date == 3))
-				addlog(announce("Ä¹¤¯ÉÔ°Â¤ÊÌë¤¬ÌÀ¤±¤Ş¤·¤¿¡£Ïµ¤Î±óËÊ¤¨¤È¡¢Â­²»¤òÊ¹¤¤¤¿¼Ô¤â²¿¿Í¤«¤¤¤Ş¤¹¡£<br>ÏÃ¤·¹ç¤¤¤Î·ë²Ì¡¢Â¼¿ÍÃ£¤Ï#{Skill.skills[1].name}¤ò½è·º¤¹¤ë¤¿¤á¤ËÅêÉ¼¤ò¹Ô¤¦¤³¤È¤Ë¤·¤Ş¤·¤¿¡£"))
+				addlog(announce("é•·ãä¸å®‰ãªå¤œãŒæ˜ã‘ã¾ã—ãŸã€‚ç‹¼ã®é å ãˆã¨ã€è¶³éŸ³ã‚’èã„ãŸè€…ã‚‚ä½•äººã‹ã„ã¾ã™ã€‚<br>è©±ã—åˆã„ã®çµæœã€æ‘äººé”ã¯#{Skill.skills[1].name}ã‚’å‡¦åˆ‘ã™ã‚‹ãŸã‚ã«æŠ•ç¥¨ã‚’è¡Œã†ã“ã¨ã«ã—ã¾ã—ãŸã€‚"))
 			end
 		else
 			while (ps.size > 0)
 				p = ps[rand(ps.size).to_i]
 				p.dead = 1
 				@victims.push(p)
-				addlog(victim_announce("#{p.name} ¤¬Ìµ»Ä¤Ê»Ñ¤ÇÈ¯¸«¤µ¤ì¤Ş¤·¤¿¡£"))
+				addlog(victim_announce("#{p.name} ãŒç„¡æ®‹ãªå§¿ã§ç™ºè¦‹ã•ã‚Œã¾ã—ãŸã€‚"))
 				ps.delete(p)
 			end
 			if ((@card && @date == 2) || (!@card && @date == 3))
 				if(@death_defeat)
-					str = "°¿¤ëÂ¼¤Ç¡¢ÌÀ¤é¤«¤Ë¡Ö¿©¤¤»¶¤é¤«¤µ¤ì¤¿¡×¤È²ò¤ë¡¢¤ª¤¾¤Ş¤·¤¤¥À¥Ë¥¨¥ë¡Ê¸ÇÄê¡Ë¤Î»àÂÎ¤¬¸«¤Ä¤«¤ê¤Ş¤·¤¿¡£<br>¿ÍÏµÅÁÀâ¤Ê¤ó¤ÆÂ¸ºß¤·¤Ê¤¤¤³¤ÎÂ¼¤Ç¤Ï¡¢Â¼¤Ë»¦¿Í¼Ô¡½¡½¡½¿Í¿©¤¤¤¬¸½¤ì¤¿¤Î¤À¤È¡¢¤¹¤°¤ËÍı²ò¤·¤Ş¤·¤¿¡£<br>¤³¤Î¤Ş¤Ş¤Ç¤Ï¡¢Â¼¤Ï¿Í¿©¤¤¤Ë¿©¤¤¿Ô¤¯¤µ¤ì¤ÆÌÇ¤Ó¤Æ¤·¤Ş¤¦¤Ç¤·¤ç¤¦¡£<br><br>¤À¤«¤é¡¢Â¼¿ÍÃ£¤Ï¡¢¡Ø¼«¤é¤¬À¸¤­»Ä¤ë°Ù¤Ë¡Ù¡¢Æ±¤¸Â¼¿ÍÃ£¤òµ¿¤¤¡Ä¡ÄÂ¿¿ô·è¤Ç¡¢Ì±¼çÅª¤Ëµ¿¤ï¤·¤­¤òÈ³¤·¤Æ¹Ô¤¯¤³¤È¤Ë¤·¤¿¤Î¤Ç¤¹¡£<br>µ¾À·¼Ô¤¬½Ğ¤Ê¤¯¤Ê¤ë¡¢¤½¤Î»ş¤Ş¤Ç¡£"
+					str = "æˆ–ã‚‹æ‘ã§ã€æ˜ã‚‰ã‹ã«ã€Œé£Ÿã„æ•£ã‚‰ã‹ã•ã‚ŒãŸã€ã¨è§£ã‚‹ã€ãŠãã¾ã—ã„ãƒ€ãƒ‹ã‚¨ãƒ«ï¼ˆå›ºå®šï¼‰ã®æ­»ä½“ãŒè¦‹ã¤ã‹ã‚Šã¾ã—ãŸã€‚<br>äººç‹¼ä¼èª¬ãªã‚“ã¦å­˜åœ¨ã—ãªã„ã“ã®æ‘ã§ã¯ã€æ‘ã«æ®ºäººè€…â€•â€•â€•äººé£Ÿã„ãŒç¾ã‚ŒãŸã®ã ã¨ã€ã™ãã«ç†è§£ã—ã¾ã—ãŸã€‚<br>ã“ã®ã¾ã¾ã§ã¯ã€æ‘ã¯äººé£Ÿã„ã«é£Ÿã„å°½ãã•ã‚Œã¦æ»…ã³ã¦ã—ã¾ã†ã§ã—ã‚‡ã†ã€‚<br><br>ã ã‹ã‚‰ã€æ‘äººé”ã¯ã€ã€è‡ªã‚‰ãŒç”Ÿãæ®‹ã‚‹ç‚ºã«ã€ã€åŒã˜æ‘äººé”ã‚’ç–‘ã„â€¦â€¦å¤šæ•°æ±ºã§ã€æ°‘ä¸»çš„ã«ç–‘ã‚ã—ãã‚’ç½°ã—ã¦è¡Œãã“ã¨ã«ã—ãŸã®ã§ã™ã€‚<br>çŠ ç‰²è€…ãŒå‡ºãªããªã‚‹ã€ãã®æ™‚ã¾ã§ã€‚"
 				else
-					str = "¤Ä¤¤¤Ëµ¾À·¼Ô¤¬½Ğ¤Æ¤·¤Ş¤¤¤Ş¤·¤¿¡£¤ä¤Ï¤ê¿ÍÏµ¤Ï¤¤¤¿¤Î¤Ç¤¹¡£<br>ÏÃ¤·¹ç¤¤¤Î·ë²Ì¡¢Â¼¿ÍÃ£¤Ï¿ÍÏµ¤ò½è·º¤¹¤ë¤¿¤á¤ËÅêÉ¼¤ò¹Ô¤¦¤³¤È¤Ë¤·¤Ş¤·¤¿¡£"
+					str = "ã¤ã„ã«çŠ ç‰²è€…ãŒå‡ºã¦ã—ã¾ã„ã¾ã—ãŸã€‚ã‚„ã¯ã‚Šäººç‹¼ã¯ã„ãŸã®ã§ã™ã€‚<br>è©±ã—åˆã„ã®çµæœã€æ‘äººé”ã¯äººç‹¼ã‚’å‡¦åˆ‘ã™ã‚‹ãŸã‚ã«æŠ•ç¥¨ã‚’è¡Œã†ã“ã¨ã«ã—ã¾ã—ãŸã€‚"
 				end
 				addlog(announce(str))
 			end
@@ -1148,7 +1150,7 @@ class Vil
 		up_reset_deathtarget
 		return if (up_gameover)
 		up_lifetime
-		addlog(announce("Ìë¤Ë¤Ê¤ê¤Ş¤·¤¿¡£<br>Â¼¿ÍÃ£¤Ï²È¤Ë¸°¤ò¤«¤±¡¢Ìë¤¬ÌÀ¤±¤ë¤Î¤òÂÔ¤Ã¤Æ¤¤¤Ş¤¹¡£"))
+		addlog(announce("å¤œã«ãªã‚Šã¾ã—ãŸã€‚<br>æ‘äººé”ã¯å®¶ã«éµã‚’ã‹ã‘ã€å¤œãŒæ˜ã‘ã‚‹ã®ã‚’å¾…ã£ã¦ã„ã¾ã™ã€‚"))
 	end
 
 	def night_update
@@ -1173,11 +1175,11 @@ class Vil
     	return if (up_gameover)
 
 		if (DEBUG)
-			s = '¸½ºß¤ÎÀ¸Â¸¼Ô¤Ï'
+			s = 'ç¾åœ¨ã®ç”Ÿå­˜è€…ã¯'
 			pids.each do |p|
 				s += ", #{p.name}"
 			end
-			s += "¤Î#{pids.size}¿Í¤Ç¤¹¡£¥Æ¥­¥È¡¼¤Ë´èÄ¥¤ê¤Ş¤·¤ç¤¦¡£"
+			s += "ã®#{pids.size}äººã§ã™ã€‚ãƒ†ã‚­ãƒˆãƒ¼ã«é ‘å¼µã‚Šã¾ã—ã‚‡ã†ã€‚"
 			addlog(announce(s))
 		end
 	end
@@ -1244,7 +1246,7 @@ class Vil
 			s += %Q(<td>#{p.name})
 			s += %Q(<br>ID: <a href="../?cmd=user&uid=#{CGI.escape(p.userid)}">#{p.userid}</a><br>#{Skill.skills[p.sid].name})
 			if (p.lovers.size != 0)
-				s += %Q(<span class="cupid">(Îø¿Í)</span>)
+				s += %Q(<span class="cupid">(æ‹äºº)</span>)
 			end
 			s += "</td></tr>"
 		end
@@ -1306,17 +1308,17 @@ class Vil
 
 					of.flock(File::LOCK_EX)
 					of.print(HEAD1.gsub(/plugin/, "../plugin"))
-					of.print("<title>Å·¹ñ #{@vid} #{@name}</title>")
+					of.print("<title>å¤©å›½ #{@vid} #{@name}</title>")
 					of.print(HEAD2)
 
-					str += %Q(<table width="100%"><tr><td align="center"><table class="main" cellpadding=0 cellspacing=0><tr><td align="left" valign="top"><table class="vil_main"><tr><td width ="#{LIST_WIDTH}"><a href="http://wolften.sakura.ne.jp/">¥È¥Ã¥×¥Ú¡¼¥¸</a></td><td></td></tr><tr><td></td><td><h2>#{@vid}Â¼ #{@name}</h2><p>)
+					str += %Q(<table width="100%"><tr><td align="center"><table class="main" cellpadding=0 cellspacing=0><tr><td align="left" valign="top"><table class="vil_main"><tr><td width ="#{LIST_WIDTH}"><a href="http://wolften.sakura.ne.jp/">ãƒˆãƒƒãƒ—ãƒšãƒ¼ã‚¸</a></td><td></td></tr><tr><td></td><td><h2>#{@vid}æ‘ #{@name}</h2><p>)
 					date_all = ''
 					for i in 0..@date
 						datestr =
 						if (i == 0)
-							"¾ğÊó"
+							"æƒ…å ±"
 						else
-							"#{i}ÆüÌÜ"
+							"#{i}æ—¥ç›®"
 						end
 						if (i == date)
 							date_all += %Q(<span class="today">#{datestr}</span> )
@@ -1332,15 +1334,15 @@ class Vil
 					for t in all_type do
 						typechar =
 						if (t == "say")
-							"¿Í"
+							"äºº"
 						elsif(t == "whisper")
-							"Ïµ"
+							"ç‹¼"
 						elsif(t == "groan")
-							"Êè"
+							"å¢“"
 						elsif(t == "think")
-							"ÆÈ"
+							"ç‹¬"
 						elsif(t == "all")
-							"Á´"
+							"å…¨"
 						end
 						if (t == type)
 							date_all += %Q( <span class="today">#{typechar}</span>)
@@ -1354,17 +1356,17 @@ class Vil
 						str += %Q(<td></td><td valign="top">)
 						str += erbres('skel/endinfo.html')
 					else
-						str += %Q(<td valign="bottom"><table class="list"><tr><th colspan="2">À¸Â¸ #{survivors.size}¿Í</th></tr>)
+						str += %Q(<td valign="bottom"><table class="list"><tr><th colspan="2">ç”Ÿå­˜ #{survivors.size}äºº</th></tr>)
 						str += up_char_list(survivors, date, type)
-						str += %Q(<tr><th colspan="2">µ¾À· #{@victims.size}¿Í</th></tr>)
+						str += %Q(<tr><th colspan="2">çŠ ç‰² #{@victims.size}äºº</th></tr>)
 						str += up_char_list(@victims, date, type)
-						str += %Q(<tr><th colspan="2">½è·º #{@executions.size}¿Í</th></tr>)
+						str += %Q(<tr><th colspan="2">å‡¦åˆ‘ #{@executions.size}äºº</th></tr>)
 						str += up_char_list(@executions, date, type)
 						str += %Q(</table></td>)
 						str += %Q(<td valign="top">#{log[date][type]})
 					end
 					str += "</td>"
-					str += %Q(</tr><tr><td></td><td><p>#{date_all}</p></td></tr><tr><td><a href="http://wolften.sakura.ne.jp/">¥È¥Ã¥×¥Ú¡¼¥¸</a></td><td></td></tr></table></td></tr></table></td></tr></table>)
+					str += %Q(</tr><tr><td></td><td><p>#{date_all}</p></td></tr><tr><td><a href="http://wolften.sakura.ne.jp/">ãƒˆãƒƒãƒ—ãƒšãƒ¼ã‚¸</a></td><td></td></tr></table></td></tr></table></td></tr></table>)
 					of.print(str)
 					of.print(FOOT)
 				end
@@ -1408,7 +1410,7 @@ class Vil
 				up_upreset_time
 				if (DEBUG)
 					@players.each_value do |p|
-						s = "#{p.name}¤ÎÌò¿¦¤Ï#{Skill.skills[p.sid].name}¤Ç¤¹¡£"
+						s = "#{p.name}ã®å½¹è·ã¯#{Skill.skills[p.sid].name}ã§ã™ã€‚"
 						addlog(announce(s))
 					end
 				end
@@ -1419,7 +1421,7 @@ class Vil
 			@wide_comps = nil
 			if (DEBUG)
 				@players.each_value do |p|
-					s = "#{p.name}¤ÎÌò¿¦¤Ï#{Skill.skills[p.sid].name}¤Ç¤¹¡£"
+					s = "#{p.name}ã®å½¹è·ã¯#{Skill.skills[p.sid].name}ã§ã™ã€‚"
 					addlog(announce(s))
 				end
 			end
