@@ -47,7 +47,7 @@ vldb.transaction do
 					completion.push(vil_list(vild))
 				end
 				if (i == pages*100- page*100 + 1)
-					completion.push(%Q(<tr><td colspan="10"><a href="?page=#{page+1}">¼¡¤Î100·ï¤òÉ½¼¨¤¹¤ë¡£</a></td></tr>))
+					completion.push(%Q(<tr><td colspan="10"><a href="?page=#{page+1}">æ¬¡ã®100ä»¶ã‚’è¡¨ç¤ºã™ã‚‹ã€‚</a></td></tr>))
 				end
 			elsif (vild['state'] == 2)
 				showdown.push(vil_list(vild))
@@ -69,8 +69,8 @@ end
 		</tr>
 		<tr>
 			<td class="caption">
-				<div class="credit">¥×¥é¥¤¥ó Illustrated by namba¡¡¼·ºÌ Illustrated by ¼·ºÌ<br>¥¢¥Ë¥Ş¥ë Illustrated by silver25¡¡°­Ì´(ame) Illustrated by amenohi<br>knight Illustrated by knight</div>
-				<br>Å·¹ñ¥í¥°Êİ´É¸Ë¡£<br>
+				<div class="credit">ãƒ—ãƒ©ã‚¤ãƒ³ Illustrated by nambaã€€ä¸ƒå½© Illustrated by ä¸ƒå½©<br>ã‚¢ãƒ‹ãƒãƒ« Illustrated by silver25ã€€æ‚ªå¤¢(ame) Illustrated by amenohi<br>knight Illustrated by knight</div>
+				<br>å¤©å›½ãƒ­ã‚°ä¿ç®¡åº«ã€‚<br>
         <br><br>
 			</td>
 		</tr>
@@ -78,10 +78,10 @@ end
 			<td>
 				<table class="menu">
 				<tr>
-					<td><div><a href="?cmd=doc">ÀâÌÀ½ñ¤Ê¤É</a></div></td>
-					<td><div><a href="?cmd=conf">¥æ¡¼¥¶ÀßÄê</a></div></td>
-					<td><div><a href="http://record.gunjobiyori.com/userlist.html">¥æ¡¼¥¶°ìÍ÷</a></div></td>
-					<td><div><a href="http://record.gunjobiyori.com/">ÀïÀÓ¥Ó¥å¡¼¥ï</a></div></td>
+					<td><div><a href="?cmd=doc">èª¬æ˜æ›¸ãªã©</a></div></td>
+					<td><div><a href="?cmd=conf">ãƒ¦ãƒ¼ã‚¶è¨­å®š</a></div></td>
+					<td><div><a href="http://record.gunjobiyori.com/userlist.html">ãƒ¦ãƒ¼ã‚¶ä¸€è¦§</a></div></td>
+					<td><div><a href="http://record.gunjobiyori.com/">æˆ¦ç¸¾ãƒ“ãƒ¥ãƒ¼ãƒ¯</a></div></td>
 				</tr>
 				</table>
 			</td>
@@ -92,12 +92,12 @@ end
 <% if (@login.login) %>
 		<input type="hidden" name="cmd" value="logout">
 			<a href="?cmd=user&uid=<%= CGI.escape(@login.userid) %>"><%= @login.userid %></a>
-		<input type="submit" value="¥í¥°¥¢¥¦¥È" class="submit">
+		<input type="submit" value="ãƒ­ã‚°ã‚¢ã‚¦ãƒˆ" class="submit">
 <% else %>
 		<input type="hidden" name="cmd" value="login">
 		ID: <input type="text" name="userid" class="pass">
 		PASS: <input type="password" name="pass" class="pass">
-		<input type="submit" value="¥í¥°¥¤¥ó" class="submit">
+		<input type="submit" value="ãƒ­ã‚°ã‚¤ãƒ³" class="submit">
 <% end %>
 			</td>
 		</form>
@@ -107,16 +107,16 @@ end
 
 				<table><tr><%= page_list %></tr></table>
 				<table class="vil_index">
-				<tr><td colspan="10" class="vil_title">¡û Êç½¸Ãæ</td></tr>
+				<tr><td colspan="10" class="vil_title">â—‹ å‹Ÿé›†ä¸­</td></tr>
 <%= preinitiation %>
 				<tr><td class="space"></td></tr>
-				<tr><td colspan="10" class="vil_title">¡û ¿Ê¹ÔÃæ</td></tr>
+				<tr><td colspan="10" class="vil_title">â—‹ é€²è¡Œä¸­</td></tr>
 <%= progress %>
 				<tr><td class="space"></td></tr>
-				<tr><td colspan="10" class="vil_title">¡û ·èÃå</td></tr>
+				<tr><td colspan="10" class="vil_title">â—‹ æ±ºç€</td></tr>
 <%= showdown %>
 				<tr><td class="space"></td></tr>
-				<tr><td colspan="10" class="vil_title">¡û ½ªÎ»</td></tr>
+				<tr><td colspan="10" class="vil_title">â—‹ çµ‚äº†</td></tr>
 <%= completion %>
 				</table>
 			</td>
