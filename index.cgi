@@ -1,3 +1,3 @@
-#!/usr/local/bin/ruby
+#!./ruby
 
 require 'index'
