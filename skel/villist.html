@@ -78,10 +78,14 @@ end
 			<td>
 				<table class="menu">
 				<tr>
-					<td><div><a href="?cmd=doc">説明書など</a></div></td>
+					<td><div><a href="?cmd=doc">天国のこといろいろ</a></div></td>
 					<td><div><a href="?cmd=conf">ユーザ設定</a></div></td>
-					<td><div><a href="http://record.gunjobiyori.com/userlist.html">ユーザ一覧</a></div></td>
-					<td><div><a href="http://record.gunjobiyori.com/">戦績ビューワ</a></div></td>
+					<td><div><a href="?cmd=userlist">ユーザ一覧</a></div></td>
+					<td><div><a href="pigeon.cgi">携帯版</a></div></td>
+				</tr>
+				<tr>
+					<td><div><a href="?cmd=char&set=plain">キャラ一覧</a></div></td>
+					<td><div><a href="?cmd=mkvil">村を作る</a></div></td>
 				</tr>
 				</table>
 			</td>
@@ -105,19 +109,19 @@ end
 		<tr>
 			<td>
 
-				<table><tr><%= page_list %></tr></table>
+				<table><tr><%= page_list.join('') %></tr></table>
 				<table class="vil_index">
 				<tr><td colspan="10" class="vil_title">○ 募集中</td></tr>
-<%= preinitiation %>
+<%= preinitiation.join('') %>
 				<tr><td class="space"></td></tr>
 				<tr><td colspan="10" class="vil_title">○ 進行中</td></tr>
-<%= progress %>
+<%= progress.join('') %>
 				<tr><td class="space"></td></tr>
 				<tr><td colspan="10" class="vil_title">○ 決着</td></tr>
-<%= showdown %>
+<%= showdown.join('') %>
 				<tr><td class="space"></td></tr>
 				<tr><td colspan="10" class="vil_title">○ 終了</td></tr>
-<%= completion %>
+<%= completion.join('') %>
 				</table>
 			</td>
 		</tr>

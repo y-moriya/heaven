@@ -156,23 +156,6 @@ class CWolf
 
 		return if (!@login.login)
 		return if (!msg || msg == '')
-		j_data = @cgi['j_data']
-		j_code = NKF.guess1(j_data)
-		opt =
-			if (j_code == NKF::JIS)
-				'-xeJ'
-			elsif (j_code == NKF::EUC)
-				'-xeE'
-			elsif (j_code == NKF::SJIS)
-				'-xeS'
-			elsif (j_code == NKF::UTF8)
-				'-xeW'
-			elsif (j_code == NKF::UTF16)
-				'-xeW16'
-			else
-				'-xe'
-			end
-		msg = NKF.nkf(opt, msg)
 		msg = CGI.escapeHTML(msg)
 		msg.gsub!(/\r\n/, '<br>')
 		msg.gsub!(/[\r\n]/, '<br>')
@@ -617,23 +600,6 @@ class CWolf
 		type = 'say'
 		return false if (@cgi['think'] == 'on' || @cgi['groan'] == 'on')
 		return false if (!msg || msg == '')
-		j_data = @cgi['j_data']
-		j_code = NKF.guess1(j_data)
-		opt =
-			if (j_code == NKF::JIS)
-				'-xeJ'
-			elsif (j_code == NKF::EUC)
-				'-xeE'
-			elsif (j_code == NKF::SJIS)
-				'-xeS'
-			elsif (j_code == NKF::UTF8)
-				'-xeW'
-			elsif (j_code == NKF::UTF16)
-				'-xeW16'
-			else
-				'-xe'
-			end
-		msg = NKF.nkf(opt, msg)
 		len = PRV_LEN
 		@val_msg = msg[0..len]
 	    if (/.\z/ !~ @val_msg)
@@ -691,23 +657,6 @@ class CWolf
 		c_msg = msg.gsub(/\r\n/, '')
 		c_msg = msg.gsub(/[\r\n]/, '')
 		return if (!c_msg || c_msg == '')
-		j_data = @cgi['j_data']
-		j_code = NKF.guess1(j_data)
-		opt =
-			if (j_code == NKF::JIS)
-				'-xeJ'
-			elsif (j_code == NKF::EUC)
-				'-xeE'
-			elsif (j_code == NKF::SJIS)
-				'-xeS'
-			elsif (j_code == NKF::UTF8)
-				'-xeW'
-			elsif (j_code == NKF::UTF16)
-				'-xeW16'
-			else
-				'-xe'
-			end
-		msg = NKF.nkf(opt, msg)
 		msg = msg.acut if (type == 'action')
 		msg = CGI.escapeHTML(msg)
 		msg.gsub!(/\r\n/, '<br>')
@@ -794,7 +743,7 @@ class CWolf
 		return if (!@login.login)
 		name = @cgi['name']
 		sname = name.jcut
-    pass = @cgi['pass']
+		pass = @cgi['pass']
 		period = @cgi['time'].to_i
 		night_period = @cgi['night_time'].to_i
 		life_period = @cgi['life_time'].to_i
@@ -819,10 +768,10 @@ class CWolf
 		open_skill = (@cgi['open_skill'] == 'on')
 		possessed = (@cgi['possessed'] == 'on')
 		death_defeat = (@cgi['death_defeat'] == 'on')
-    remainflag = (@cgi['remainflag'] == 'on')
+		remainflag = (@cgi['remainflag'] == 'on')
 
-    sayfull = @cgi['sayfull'].to_i
-    actfull = @cgi['actfull'].to_i
+		sayfull = @cgi['sayfull'].to_i
+		actfull = @cgi['actfull'].to_i
 
 		return if (!name || name == '')
 		name = CGI.escapeHTML(name)

@@ -213,13 +213,13 @@ end
 def vil_list(v)
 	vilid = %Q(<a class="vid" href="?vid=#{v['vid']}&amp;date=0">#{v['vid']}村</a>)
 	if (v['state'] > 2)
-		if (v['sname'].jsize > 20)
+		if (v['sname'].length > 20)
 			sname = %Q(<a href="?vid=#{v['vid']}&amp;date=1&amp;log=all" title="#{v['name']}">#{v['sname']}</a>)
 		else
 			sname = %Q(<a href="?vid=#{v['vid']}&amp;date=1&amp;log=all">#{v['sname']}</a>)
 		end
 	else
-		if (v['sname'].jsize > 20)
+		if (v['sname'].length > 20)
 			sname = %Q(<a href="?vid=#{v['vid']}#form" title="#{v['name']}">#{v['sname']}</a>)
 		else
 			sname = %Q(<a href="?vid=#{v['vid']}#form">#{v['sname']}</a>)
@@ -256,7 +256,7 @@ def vil_list(v)
 		night_period = "(#{night_period}+#{v['life_period']}秒*人)" if (v['life_period'].to_i != 0)
 		time += "/#{night_period}"
 	end
-	"<tr><td>#{vilid}</td><td>#{sname}</td><td>#{time}</td><td>#{card}</td><td>#{comp}</td><td>#{dummy}</td><td>#{char}</td><td>#{num}</td><td>#{start}</td><td>#{open_id}</td></tr>"
+	"<tr><td>#{vilid}</td><td>#{sname}</td><td>#{time}</td><td>#{card}</td><td>#{comp}</td><td>#{dummy}</td><td>#{char}</td><td>#{num}</td><td>#{start}</td><td>#{open_id}</td></tr>".encode("utf-8")
 end
 
 def settarget(player, t_name = nil)
