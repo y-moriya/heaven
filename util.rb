@@ -45,6 +45,7 @@ HEAD1 = <<END
 <meta http-equiv="Content-Style-Type" content="text/css">
 <link rel="stylesheet" type="text/css" href="plugin/base.css">
 <script type="text/javascript" src="plugin/jquery.js"> </script>
+<script type="text/javascript" src="plugin/jquery.easydrag.js"> </script>
 <script type="text/javascript" src="plugin/script.js"> </script>
 END
 
