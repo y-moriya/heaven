@@ -231,7 +231,7 @@ class CWolf
 
 	def print_head(title = nil)
 		@headered = true
-		print "Content-Type: text/html; charset=EUC-JP\n\n"
+		print "Content-Type: text/html; charset=UTF-8\n\n"
     	print(HEAD1)
 		if (title)
 			print "<title>天国ログ #{title}</title>"
@@ -1141,7 +1141,7 @@ class CWolf
 	end
 	def run
 		@headered = false
-		head = "Content-Type: text/html; charset=EUC-JP\n\n"
+		head = "Content-Type: text/html; charset=UTF-8\n\n"
 
 		begin
 		@login = Login.new(@cgi)

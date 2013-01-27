@@ -313,9 +313,9 @@ def settarget(player, t_name = nil)
 end
 
 def erbrun(file)
-	ERB.new(File.open(file){|f| f.read}).run(binding)
+	ERB.new(File.open(file, :encoding => Encoding::UTF_8){|f| f.read}).run(binding)
 end
 
 def erbres(file)
-	ERB.new(File.open(file){|f| f.read}).result(binding)
+	ERB.new(File.open(file, :encoding => Encoding::UTF_8){|f| f.read}).result(binding)
 end
